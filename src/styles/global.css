@@ -23,6 +23,7 @@ this layer should be relatively easy to style.
 @import url('./assets/grid.css');
 @import url('./assets/content-flow.css');
 @import url('./assets/entry-content.css');
+@import url('./assets/media-element.css');
 
 /**
 Utilities – single-purpose classes that are used to apply styles to elements.

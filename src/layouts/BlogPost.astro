@@ -39,11 +39,14 @@ const {
 			<article class="content-flow entry-content">
 				<h1>{title}</h1>
 				<p class="intro">{intro}</p>
-				<p>{author}</p>
-				<ArticleMetas pubDate={pubDate} updatedDate={updatedDate}/>
-				<figure class="is-medium-width-content">
+				<ArticleMetas 
+					author={author} 
+					pubDate={pubDate} 
+					updatedDate={updatedDate}
+				/>
+				<figure class="media-element has-medium-flow-space is-medium-width-content">
 					{heroImage && <img class="hero-image" width={1020} height={510} src={heroImage} alt="" />}
-					{heroImageCaption && <figcaption>{heroImageCaption}</figcaption>}
+					{heroImageCaption && <figcaption class="media-element__caption">{heroImageCaption}</figcaption>}
 				</figure>
 				
 				<slot />

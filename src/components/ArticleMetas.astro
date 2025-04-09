@@ -2,15 +2,16 @@
 import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = {
+	author: String,
 	pubDate: Date;
 	updatedDate?: Date;
 };
 
-const { pubDate, updatedDate } = Astro.props;
+const { author, pubDate, updatedDate } = Astro.props;
 ---
 
 <div class="article-metas">
-	By <a class="article-metas__author">fantomtracks</a> on
+	By <a class="article-metas__author">{author}</a> on
 	<time class="article-metas__date" datetime="2024-01-12">
 		Junuary 12, 2025
 		<FormattedDate date={pubDate} />

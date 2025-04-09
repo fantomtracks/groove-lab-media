@@ -7,25 +7,27 @@ heroImage: '/running-basics.webp'
 heroImageCaption: 'A runner, as the main focus, demonstrating proper running form with a knee drive on a scenic path in Prospect Park, Brooklyn. Shot close-up on a Canon EOS R5 with a 70-200mm f/2.8 lens at 200mm, ensuring the runner remains centered and prominent --ar 16:9'
 description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
 ---
+import Figure from '../../components/Figure.astro';
+import myImage from '../../assets/imgs/running-basics.webp';
 
 Running is more than just a physical activity; it's a lifestyle, a passion, and for many, a way to connect with their inner selves. Whether you're a beginner or a seasoned marathoner, the world of running offers endless opportunities for growth, self-discovery, and improvement. This article will explore the essentials of running, breaking down the journey into three key areas: preparing to run, training effectively, and maximizing performance.
 
 
 
-# Preparing to Run: Building a Strong Foundation
+## Preparing to Run: Building a Strong Foundation
 Every great running journey begins with a goal. Whether it's running your first 5K, completing a marathon, or simply improving your health, having a clear objective provides direction and motivation. Setting SMART (Specific, Measurable, Achievable, Relevant, Time-bound) goals can help you stay focused and track your progress.
 
 Finding motivation is equally important. For some, the thrill of competition drives them forward; for others, it's the desire to improve personal fitness or the joy of running in nature. Identifying your source of motivation will help you stay committed, even when the going gets tough.
 
 Proper running form and technique are crucial for preventing injuries and improving efficiency. Key points to keep in mind include maintaining good posture, ensuring a natural arm swing, and aiming for a mid-foot strike. Regularly practicing good form can help you run more efficiently and reduce the risk of injuries.
 
-[image here]
+<Figure src={myImage} alt="An image" caption="This is a caption" widths={[200, 400, 1440]}/>
 
 A well-structured training plan is essential for any runner, regardless of experience level. Your plan should include a mix of easy runs, long runs, and speed workouts. It's also important to schedule rest days to allow your body to recover and adapt.
 
 For beginners, a Couch to 5K program is a great way to start. This plan gradually increases running time and distance, making it manageable and enjoyable. Intermediate and advanced runners can benefit from more specialized plans tailored to their specific goals, such as a half-marathon or marathon.
 
-# Training Effectively: Techniques and Strategies
+## Training Effectively: Techniques and Strategies
 To become a well-rounded runner, it's important to include various types of runs in your training routine. Easy runs are done at a comfortable pace, building endurance without overexertion. Long runs, crucial for endurance, prepare you for distance races like marathons. Speed workouts, including intervals, tempo runs, and hill repeats, improve your speed and running economy. Recovery runs, short and easy, promote blood flow and recovery after intense workouts.
 
 Incorporating strength training and cross-training into your routine can enhance your running performance and prevent injuries. Strength training focuses on building muscle strength, particularly in the core, legs, and glutes, which are essential for a powerful stride. Cross-training activities, such as cycling, swimming, or yoga, provide a break from running while still offering cardiovascular benefits. These activities can improve overall fitness, flexibility, and mental freshness.
@@ -42,7 +44,7 @@ Rest and recovery are essential components of any training program. Adequate sle
 
 Always remember to hydrate!
 
-# Maximizing Performance: Advanced Strategies
+## Maximizing Performance: Advanced Strategies
 Tracking your runs and analyzing data can provide valuable insights into your performance. Use a running app or a GPS watch to monitor distance, pace, heart rate, and elevation. Reviewing this data helps identify trends, strengths, and areas needing improvement.
 
 Regularly assessing your progress against your goals can keep you motivated and informed about when to adjust your training plan. Setting periodic performance benchmarks, such as time trials or race simulations, can also help gauge your readiness for upcoming events.
@@ -51,11 +53,17 @@ Running is as much a mental challenge as it is a physical one. Developing mental
 
 Mindfulness practices, like meditation or deep breathing exercises, can also benefit runners by reducing stress and improving concentration. Incorporating these practices into your routine can enhance overall well-being and performance.
 
-[fullwidth image here]
+<Figure 
+    src={myImage} 
+    alt="An image" 
+    caption="This is a caption" 
+    widths={[200, 400, 1440]}
+    figClasses='is-full-width-content'
+/>
 
 Recovery is a crucial component of any training program. Proper recovery allows your muscles to repair and grow stronger, reducing the risk of overuse injuries. Include activities such as stretching, foam rolling, and massage to aid in recovery.
 
 Listening to your body and addressing any signs of pain or discomfort promptly can prevent minor issues from becoming serious injuries. If you experience persistent pain, consult a healthcare professional for an accurate diagnosis and appropriate treatment.
 
-# Conclusion
+## Conclusion
 The world of running is vast and filled with opportunities for personal growth and achievement. Whether you're just starting out or looking to push your limits, understanding the essentials of running—goal setting, proper technique, varied training, nutrition, mental preparation, and recovery—can help you become a stronger, more confident runner. Embrace the journey, stay committed to your goals, and enjoy the countless benefits that running brings to your life.

@@ -1,0 +1,20 @@
+---
+import { Image } from "astro:assets";
+const { 
+	src,
+	alt,
+	caption,
+	widths = [320],
+	figClasses = "is-large-width-content"
+ } = Astro.props;
+
+ const classes = figClasses + ' media-element has-medium-flow-space'
+---
+<figure class={classes}>
+	<Image 
+		src={src}
+		alt={alt}
+		widths={widths}
+	/>
+	{caption && <figcaption class="media-element__caption">{caption}</figcaption>}
+</figure>
