@@ -79,7 +79,6 @@
 }
 
 :where(a) {
-	color: var(--color--link);
 	text-decoration: underline;
 
 	&:hover,

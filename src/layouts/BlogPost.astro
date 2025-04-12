@@ -4,6 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import ArticleMetas from '../components/ArticleMetas.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from "astro:assets";
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -15,6 +16,7 @@ const {
 	updatedDate,
 	heroImage, 
 	heroImageCaption, 
+	heroImageAlt,
 	description
 } = Astro.props;
 ---
@@ -45,7 +47,17 @@ const {
 					updatedDate={updatedDate}
 				/>
 				<figure class="media-element has-medium-flow-space is-medium-width-content">
-					{heroImage && <img class="hero-image" width={1020} height={510} src={heroImage} alt="" />}
+					{heroImage && 
+						<Image
+							class="hero-image"
+							src={heroImage}
+							alt={heroImageAlt ? heroImageAlt : ''}
+							widths={[320, 640, 1020]}
+							width=1020
+							height=510
+							loading={'eager'}
+						/>
+					}
 					{heroImageCaption && <figcaption class="media-element__caption">{heroImageCaption}</figcaption>}
 				</figure>
 				

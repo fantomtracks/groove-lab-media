@@ -4,34 +4,39 @@ import { SITE_TITLE } from '../consts';
 ---
 
 <header class="grid__header">
-	<nav class="site-header">
-		<a href="/">{SITE_TITLE}</a>
-		<nav class="site-nav">
-			<ul class="site-nav__list">
-				<li class="site-nav__item"><HeaderLink href="/">Home</HeaderLink></li>
-				<li class="site-nav__item"><HeaderLink href="/about">About</HeaderLink></li>
-			</ul>
+	<div class="site-header">
+		<nav class="site-header__wrapper">
+			<a class="site-nav__link" href="/">{SITE_TITLE}</a>
+			<nav class="site-nav">
+				<ul class="site-nav__list">
+					<li class="site-nav__item"><HeaderLink class:list={'site-nav__link'} href="/">Home</HeaderLink></li>
+					<li class="site-nav__item"><HeaderLink class:list={'site-nav__link'} href="/about">About</HeaderLink></li>
+				</ul>
+			</nav>
 		</nav>
-	</nav>
+	</div>
 </header>
 <style>
 	.site-header {
+		border-block-end: 1px solid var(--color--light-gray);
+		background-color: var(--color--white);
+	}
+
+	.site-header__wrapper {
 		display: flex;
 		justify-content: space-between;
-		background-color: var(--color--white);
-		border-block-end: 1px solid var(--color--light-gray);
 		padding-block: var(--space-s);
 		padding-inline: var(--width--site-gutter);
 		max-inline-size: var(--width--content--large);
 		margin-inline: auto;
+		font-family: var(--font-family--sans-serif);
+		font-size: var(--step--1);
 	}
 
 	.site-nav__list {
 		align-items: center;
 		display: flex;
 		flex-wrap: wrap;
-		font-family: var(--font-family--sans-serif);
-		font-size: var(--step--1);
 		gap: var(--space-xs);
 		justify-content: flex-end;
 		list-style-type: '';
@@ -48,6 +53,7 @@ import { SITE_TITLE } from '../consts';
 		color: var(--color--black);
 		display: block;
 		padding: var(--space-3xs);
+		text-decoration: none;
 	}
 
 	.site-nav__item--logo {
