@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from '../components/FormattedDate.astro';
+
+type Props = {
+	href: string,
+	img: string,
+	title: string;
+	date: Date;
+	time: number;
+};
+
+const { href, img, title, date, time } = Astro.props;
+---
+<style>
+	.card {
+		display: block;
+		background: yellow;
+		text-decoration: none;
+	}
+</style>
+<a class="card" href={href}>
+	<Image
+		width={720}
+		height={360}
+		src={img}
+		alt=""
+	/>
+	<h2 class="card__title">{title}</h2>
+	<date class="card__date">
+		<FormattedDate date={date} />
+	</date>
+	<div class="card__time">{time}min to read</div>
+</a>
