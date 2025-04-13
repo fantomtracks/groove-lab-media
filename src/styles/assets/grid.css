@@ -10,10 +10,14 @@
 	inset-block-start: 0;
 }
 
-.grid__main {
-	margin-block-start: var(--space-2xl);
+.grid__main,
+.grid__footer {
+	margin-block-start: var(--space-l);
 }
 
-.grid__footer {
-	margin-block-start: var(--space-2xl);
+@media (width > 900px) {
+	.grid__main,
+	.grid__footer {
+		margin-block-start: var(--space-2xl);
+	}
 }

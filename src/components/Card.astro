@@ -15,20 +15,45 @@ const { href, img, title, date, time } = Astro.props;
 <style>
 	.card {
 		display: block;
-		background: yellow;
 		text-decoration: none;
 	}
+
+	.card__title {
+		margin-block-start: var(--space-s);
+		text-wrap: balance;
+	}
+
+	.card__info {
+		margin: var(--space-3xs);
+		font-size: var(--step--1);
+	}
+	.card__date {
+		
+	}
+
+	.card__time {
+		position: relative;
+		margin-inline-start: var(--space-xs);
+
+		&::before {
+			content: '•';
+			position: absolute;
+			left: -12px;
+		}
+	}
 </style>
-<a class="card" href={href}>
+<a class="card media-element" href={href}>
 	<Image
-		width={720}
+		width={900}
 		height={360}
 		src={img}
 		alt=""
 	/>
 	<h2 class="card__title">{title}</h2>
-	<date class="card__date">
-		<FormattedDate date={date} />
-	</date>
-	<div class="card__time">{time}min to read</div>
+	<div class="card__info">
+		<date class="card__date">
+			<FormattedDate date={date} />
+		</date>
+		<span class="card__time">{time}min to read</span>
+	</div>
 </a>

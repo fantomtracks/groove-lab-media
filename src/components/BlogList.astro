@@ -5,15 +5,17 @@ import Card from '../components/Card.astro';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const { currentPage, totalPages } = Astro.props;
 ---
 <style>
 	.bloglist {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr;
 		gap: 2rem;
 		list-style-type: none;
 		margin: 0;
-		padding: 0;
+		padding-inline: var(--space-s);
 		max-inline-size: 900px;
 		margin-inline: auto;
 	}
@@ -22,15 +24,20 @@ const posts = (await getCollection('blog')).sort(
 		margin: 0
 	}
 
-	.bloglist__item:first-child {
-		grid-column: span 2;
+	@media (width > 900px) {
+		.bloglist {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.bloglist__item:first-child {
+			grid-column: span 2;
+		}
 	}
 </style>
 
 
 <ul class="bloglist">
-	{
-		posts.map((post) => (
+	{posts.map((post) => (
 			<li class="bloglist__item">
 				<Card 
 					href={`/blog/${post.id}/`}
