@@ -8,12 +8,12 @@ type Props = {
 };
 
 const { author, pubDate, updatedDate } = Astro.props;
+
 ---
 
 <div class="article-metas">
 	By <a class="article-metas__author">{author}</a> on
 	<time class="article-metas__date" datetime="2024-01-12">
-		Junuary 12, 2025
 		<FormattedDate date={pubDate} />
 	</time>
 	{
