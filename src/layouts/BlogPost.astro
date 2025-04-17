@@ -7,7 +7,6 @@ import { Image } from "astro:assets";
 type Props = CollectionEntry<'blog'>['data'];
 
 const {
-	layout,
 	category,
 	title,
 	intro,
@@ -25,7 +24,7 @@ const {
 	<article class="content-flow entry-content">
 		<h1>{title}</h1>
 		<p class="intro">{intro}</p>
-		<p><a href={`/category/${category}`}></a></p>
+		<p><a href={`/category/${category}`}>category : {category}</a></p>
 		<ArticleMetas 
 			author={author} 
 			pubDate={pubDate} 
