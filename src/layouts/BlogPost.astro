@@ -1,14 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
+import Layout from '../layouts/Layout.astro';
 import ArticleMetas from '../components/ArticleMetas.astro';
-import Footer from '../components/Footer.astro';
 import { Image } from "astro:assets";
 
 type Props = CollectionEntry<'blog'>['data'];
 
 const {
+	layout,
+	category,
 	title,
 	intro,
 	author,
@@ -21,49 +21,31 @@ const {
 } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				padding-inline: var(--width-site-gutter);
-			}
-
-			.hero-image {
-				width: 100%;
-			}
-		</style>
-	</head>
-
-	<body class="grid">
-		<Header class="grid__header"/>
-		<main class="grid__main">
-			<article class="content-flow entry-content">
-				<h1>{title}</h1>
-				<p class="intro">{intro}</p>
-				<ArticleMetas 
-					author={author} 
-					pubDate={pubDate} 
-					updatedDate={updatedDate}
+<Layout {title}>
+	<article class="content-flow entry-content">
+		<h1>{title}</h1>
+		<p class="intro">{intro}</p>
+		<p><a href={`/category/${category}`}></a></p>
+		<ArticleMetas 
+			author={author} 
+			pubDate={pubDate} 
+			updatedDate={updatedDate}
+		/>
+		<figure class="media-element has-medium-flow-space is-medium-width-content">
+			{heroImage && 
+				<Image
+					class="hero-image"
+					src={heroImage}
+					alt={heroImageAlt ? heroImageAlt : ''}
+					widths={[320, 640, 1020]}
+					width=1020
+					height=510
+					loading={'eager'}
 				/>
-				<figure class="media-element has-medium-flow-space is-medium-width-content">
-					{heroImage && 
-						<Image
-							class="hero-image"
-							src={heroImage}
-							alt={heroImageAlt ? heroImageAlt : ''}
-							widths={[320, 640, 1020]}
-							width=1020
-							height=510
-							loading={'eager'}
-						/>
-					}
-					{heroImageCaption && <figcaption class="media-element__caption">{heroImageCaption}</figcaption>}
-				</figure>
-				
-				<slot />
-			</article>
-		</main>
-		<Footer />
-	</body>
-</html>
+			}
+			{heroImageCaption && <figcaption class="media-element__caption">{heroImageCaption}</figcaption>}
+		</figure>
+		
+		<slot />
+	</article>
+</Layout>
