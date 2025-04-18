@@ -2,15 +2,8 @@
 import { Image } from 'astro:assets';
 import FormattedDate from '../components/FormattedDate.astro';
 
-type Props = {
-	href: string,
-	img: string,
-	title: string;
-	date: Date;
-	time: number;
-};
-
-const { href, img, title, date, time } = Astro.props;
+const { post } = Astro.props;
+const { heroImage, title, pubDate, time } = post.data;
 ---
 <style>
 	.card {
@@ -42,17 +35,20 @@ const { href, img, title, date, time } = Astro.props;
 		}
 	}
 </style>
-<a class="card media-element" href={href}>
+<!-- debug -->
+<!-- <pre>{JSON.stringify(post)}</pre> -->
+
+<a class="card media-element" href={`/blog/${post.id}/`}>
 	<Image
 		width={900}
 		height={360}
-		src={img}
+		src={heroImage}
 		alt=""
 	/>
 	<h2 class="card__title">{title}</h2>
 	<div class="card__info">
 		<date class="card__date">
-			<FormattedDate date={date} />
+			<FormattedDate date={pubDate} />
 		</date>
 		<span class="card__time">{time}min to read</span>
 	</div>

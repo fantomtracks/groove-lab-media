@@ -39,13 +39,7 @@ const { currentPage, totalPages } = Astro.props;
 <ul class="bloglist">
 	{posts.map((post) => (
 			<li class="bloglist__item">
-				<Card 
-					href={`/blog/${post.id}/`}
-					img={post.data.heroImage || '/path/to/placeholder.jpg'}
-					title={post.data.title}
-					date={post.data.pubDate}
-					time={0}
-				/>
+				<Card {post} />
 			</li>
 		))
 	}
