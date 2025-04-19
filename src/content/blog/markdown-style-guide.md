@@ -5,10 +5,11 @@ title: 'Markdown Style Guide'
 intro: 'toto'
 author: 'fantomtracks'
 pubDate: '2022-07-22'
-heroImage: '/blog-placeholder-1.jpg'
-heroImageCaption: 'blabhblah'
-heroImageAlt: 'alt'
-description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
+heroImage: {
+    src: '/blog-placeholder-1.jpg',
+    caption: 'blabhblah',
+    alt: 'alt'
+}
 ---
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.

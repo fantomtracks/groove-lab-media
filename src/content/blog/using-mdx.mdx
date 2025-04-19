@@ -5,8 +5,11 @@ title: 'Using MDX'
 intro: 'An introduction to MDX in Astro' # Add this field
 author: 'fantomtracks' # Add this field
 pubDate: 'Jun 01 2024'
-heroImage: '/blog-placeholder-5.jpg'
-description: 'Lorem ipsum dolor sit amet'
+heroImage: {
+    src: '/blog-placeholder-5.jpg',
+    caption: 'blabhblah',
+    alt: 'alt'
+}
 ---
 
 This theme comes with the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration installed and configured in your `astro.config.mjs` config file. If you prefer not to use MDX, you can disable support by removing the integration from your config file.

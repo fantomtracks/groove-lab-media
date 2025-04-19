@@ -42,8 +42,8 @@ const { heroImage, title, pubDate, time } = post.data;
 	<Image
 		width={900}
 		height={360}
-		src={heroImage}
-		alt=""
+		src={heroImage.src}
+		alt={heroImage.alt}
 	/>
 	<h2 class="card__title">{title}</h2>
 	<div class="card__info">
