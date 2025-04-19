@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogList from '../../components/BlogList.astro';
+
+const { category } = Astro.props;
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	
+	// Extract unique categories from the posts
+	const categories = [...new Set(posts.map((post) => post.data.category))];
+
+	// Generate paths for each category
+	return categories.map((category) => ({
+		params: { slug: category }, // Use the category as the slug
+		props: { category },        // Pass the category as a prop
+	}));
+}
+
+// Filter posts by the current category
+const posts = (await getCollection('blog')).filter((post) => post.data.category === category);
+---
+<Layout>
+	<h1>Posts by category {category}</h1>
+	<section class="blog">
+		<BlogList {posts} />
+	</section>
+</Layout>

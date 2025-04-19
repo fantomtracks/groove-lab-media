@@ -5,6 +5,22 @@ import FormattedDate from '../components/FormattedDate.astro';
 const { post } = Astro.props;
 const { heroImage, title, pubDate, time } = post.data;
 ---
+<a class="card media-element" href={`/blog/${post.id}/`}>
+	<Image
+		width={900}
+		height={360}
+		src={heroImage.src}
+		alt={heroImage.alt}
+	/>
+	<h2 class="card__title">{title}</h2>
+	<div class="card__info">
+		<date class="card__date">
+			<FormattedDate date={pubDate} />
+		</date>
+		<span class="card__time">{time}min to read</span>
+	</div>
+</a>
+
 <style>
 	.card {
 		display: block;
@@ -35,21 +51,3 @@ const { heroImage, title, pubDate, time } = post.data;
 		}
 	}
 </style>
-<!-- debug -->
-<!-- <pre>{JSON.stringify(post)}</pre> -->
-
-<a class="card media-element" href={`/blog/${post.id}/`}>
-	<Image
-		width={900}
-		height={360}
-		src={heroImage.src}
-		alt={heroImage.alt}
-	/>
-	<h2 class="card__title">{title}</h2>
-	<div class="card__info">
-		<date class="card__date">
-			<FormattedDate date={pubDate} />
-		</date>
-		<span class="card__time">{time}min to read</span>
-	</div>
-</a>

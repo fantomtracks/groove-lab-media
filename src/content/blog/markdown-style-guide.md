@@ -4,7 +4,7 @@ category: 'test'
 title: 'Markdown Style Guide'
 intro: 'toto'
 author: 'fantomtracks'
-pubDate: '2022-07-22'
+pubDate: '2022-02-22'
 heroImage: {
     src: '/blog-placeholder-1.jpg',
     caption: 'blabhblah',

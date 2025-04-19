@@ -4,7 +4,7 @@ category: 'test'
 title: 'Second post'
 intro: 'toto'
 author: 'fantomtracks'
-pubDate: 'Jul 15 2022'
+pubDate: '2022-05-22'
 heroImage: {
     src: '/blog-placeholder-4.jpg',
     caption: 'blabhblah',

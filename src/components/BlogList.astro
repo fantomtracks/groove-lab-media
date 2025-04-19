@@ -1,13 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import Card from '../components/Card.astro';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-
-const { currentPage, totalPages } = Astro.props;
+const { posts, cssMod = '' } = Astro.props;
+const htmlClasses = `bloglist ${cssMod}`; 
 ---
+<ul class={htmlClasses}>
+	{posts.map((post) => (
+		<li class="bloglist__item">
+			<Card {post} />
+		</li>
+	))}
+</ul>
+
 <style>
 	.bloglist {
 		display: grid;
@@ -29,18 +32,8 @@ const { currentPage, totalPages } = Astro.props;
 			grid-template-columns: 1fr 1fr;
 		}
 
-		.bloglist__item:first-child {
+		.bloglist.hero .bloglist__item:first-child {
 			grid-column: span 2;
 		}
 	}
 </style>
-
-
-<ul class="bloglist">
-	{posts.map((post) => (
-			<li class="bloglist__item">
-				<Card {post} />
-			</li>
-		))
-	}
-</ul>

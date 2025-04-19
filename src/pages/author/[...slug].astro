@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogList from '../../components/BlogList.astro';
+
+const { author } = Astro.props;
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	
+	// Extract unique categories from the posts
+	const categories = [...new Set(posts.map((post) => post.data.author))];
+
+	// Generate paths for each author
+	return categories.map((author) => ({
+		params: { slug: author },   // Use the author as the slug
+		props: { author },          // Pass the author as a prop
+	}));
+}
+
+// Filter posts by the current author
+const posts = (await getCollection('blog')).filter((post) => post.data.author === author);
+---
+<Layout>
+	<h1>Posts by {author}</h1>
+	<section class="blog">
+		<BlogList {posts} />
+	</section>
+</Layout>
