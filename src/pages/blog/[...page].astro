@@ -1,0 +1,59 @@
+---
+import Card from '../../components/Card.astro';
+import Layout from '../../layouts/Layout.astro';
+import Pagination from '../../components/Pagination.astro';
+
+import { getCollection } from 'astro:content';
+const { page } = Astro.props;
+
+export async function getStaticPaths({ paginate }: { paginate: import('astro').PaginateFunction }) {
+	const posts = await getCollection('blog');
+	const formatedPosts = posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+
+	return paginate(formatedPosts,{
+		pageSize: 7
+	})
+}
+---
+<Layout>
+	<section class="blog">
+		<ul class="bloglist hero">
+			{page.data.map((post) => (
+				<li class="bloglist__item">
+					<Card post={post.props} />
+				</li>
+			))}
+		</ul>
+	</section>
+	<Pagination nav={page.url}/>
+</Layout>
+
+<style>
+	.bloglist {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		list-style-type: none;
+		margin: 0;
+		padding-inline: var(--space-s);
+		max-inline-size: 900px;
+		margin-inline: auto;
+	}
+
+	.bloglist__item {
+		margin: 0
+	}
+
+	@media (width > 900px) {
+		.bloglist {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.bloglist.hero .bloglist__item:first-child {
+			grid-column: span 2;
+		}
+	}
+</style>

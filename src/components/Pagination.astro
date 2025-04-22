@@ -1,0 +1,23 @@
+---
+const { nav } = Astro.props
+const { prev, next } = nav
+---
+<nav class="pagination" aria-label="Blog pages">
+	{
+		prev && (
+			<a href={prev}>Previous</a>
+		)
+	}
+
+	{
+		next && (
+			<a href={next}>Next</a>
+		)
+	}
+</nav>
+<style>
+	.pagination {
+		margin-block-start: var(--space-m);
+		text-align: center;
+	}
+</style>

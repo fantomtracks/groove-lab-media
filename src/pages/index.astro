@@ -1,16 +1,1 @@
----
-import { getCollection } from 'astro:content';
-
-import Layout from '../layouts/Layout.astro';
-import BlogList from '../components/BlogList.astro';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
----
-
-<Layout>
-	<section class="blog">
-		<BlogList {posts} cssMod="hero"/>
-	</section>
-</Layout>
+<!-- Redirect to blog page, see astro.config.mjs -->

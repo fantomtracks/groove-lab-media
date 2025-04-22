@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+const { showCount } = Astro.props;
+
+// Fetch all blog posts
+const posts = await getCollection('blog');
+
+// Extract tags from posts
+const tags = posts.map((post) => post.data.tags);
+
+// Process tags to count occurrences
+const processTags = tags.reduce((acc, tag) => {
+	if (!tag) return acc; // Skip if tag is undefined
+	const value = acc[tag] || 0;
+	return {
+		...acc,
+		[tag]: value + 1, // Increment the count for the tag
+	};
+}, {});
+
+---
+<section class="tags">
+	<h3 class="tags__title">All tags:</h3>
+	<ul class="tags__list">
+		{
+			Object.entries(processTags).map(([key, val]) => (
+				<li class="tags__item"><a href={`/tag/${key}/`}>{key} {showCount && `(${val})`}</a></li>
+			))
+		}
+	</ul>
+</section>
+<style>
+	.tags {
+		margin-block-start: var(--space-m);
+		max-inline-size: 900px;
+		margin-inline: auto;
+		text-align: center;
+	}
+
+	.tags__list {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+</style>

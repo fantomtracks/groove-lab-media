@@ -1,6 +1,5 @@
 ---
-layout: '../../layouts/BlogPost.astro'
-category: 'test'
+tags: 'test'
 title: 'Third post Third post Third post Third post Third post Third post'
 intro: 'toto'
 author: 'fantomtracks'
