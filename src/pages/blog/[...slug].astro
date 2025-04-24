@@ -3,17 +3,11 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import { render } from 'astro:content';
 
 import BlogPost from '../../layouts/BlogPost.astro';
-import AllTags from '../../components/AllTags.astro';
 
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
-
-// Fetch all posts to extract tags
-const allPosts = await getCollection('blog');
-const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all tags into a single array
-
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -26,5 +20,4 @@ export async function getStaticPaths() {
 
 <BlogPost {...post.data}>
 	<Content />
-	<AllTags tags={allTags} />
 </BlogPost>

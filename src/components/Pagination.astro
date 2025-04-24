@@ -1,23 +1,27 @@
 ---
+import Button from "./Button.astro"
 const { nav } = Astro.props
 const { prev, next } = nav
 ---
+
 <nav class="pagination" aria-label="Blog pages">
 	{
 		prev && (
-			<a href={prev}>Previous</a>
+			<Button isALink="true" href={prev} text="previous" startIcon="true"/>
 		)
 	}
 
 	{
 		next && (
-			<a href={next}>Next</a>
+			<Button isALink="true" href={next} text="next" endIcon="true" />
 		)
 	}
 </nav>
 <style>
 	.pagination {
-		margin-block-start: var(--space-m);
-		text-align: center;
+		display: flex;
+		justify-content: center;
+		gap: var(--space-s);
+		margin-block-start: var(--space-2xl);
 	}
 </style>

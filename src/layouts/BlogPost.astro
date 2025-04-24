@@ -1,9 +1,10 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import { type CollectionEntry, getCollection } from 'astro:content';
 import { Image } from "astro:assets";
 
 import Layout from '../layouts/Layout.astro';
 import ArticleMetas from '../components/ArticleMetas.astro';
+import AllTags from '../components/AllTags.astro';
 import TagsCloud from '../components/TagsCloud.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
@@ -17,6 +18,10 @@ const {
 	updatedDate,
 	heroImage
 } = Astro.props;
+
+// Fetch all posts to extract tags
+const allPosts = await getCollection('blog');
+const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all tags into a single array
 ---
 
 <Layout {title}>
@@ -52,4 +57,15 @@ const {
 		
 		<slot />
 	</article>
+	<aside class="blogpost__aside content-flow entry-content">
+		<AllTags tags={allTags} />
+	</aside>
 </Layout>
+
+<style>
+	.blogpost__aside {
+		margin-block-start: var(--space-xl);
+		border-block-start: 1px solid var(--color--light-gray);
+		padding-block: var(--space-xl);
+	}
+</style>

@@ -1,11 +1,12 @@
 ---
-
 const { 
 	isALink = false,
 	cssMod = '',
 	text= '',
 	href = '',
-	alt = '' 
+	alt = '',
+	startIcon,
+	endIcon
 } = Astro.props;
 
 let attrs = {}
@@ -16,11 +17,12 @@ if(isALink) {
 		'alt': alt,
 	}
 }
-
 ---
 
 {isALink ? (
-	<a class={`button ${cssMod}`} { ...attrs }>{text}</a>
+	<a class={`button ${cssMod}`} { ...attrs }>
+		{ startIcon && '← ' }{text}{ endIcon && ' →' }
+	</a>
 ) : (
 	<button class={`button ${cssMod}`}>{text}</button>
 )}
@@ -29,7 +31,9 @@ if(isALink) {
 	.button {
 		--bg-color: var(--color--light-blue);
 
-		display: inline-block;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
 		padding: var(--space-2xs) var(--space-xs);
 		border-radius: 500px;
 		background: var(--bg-color);
