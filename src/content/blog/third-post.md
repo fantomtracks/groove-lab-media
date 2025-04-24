@@ -1,5 +1,5 @@
 ---
-tags: 'test'
+tags: ['running', 'tededoto']
 title: 'Third post Third post Third post Third post Third post Third post'
 intro: 'toto'
 author: 'fantomtracks'

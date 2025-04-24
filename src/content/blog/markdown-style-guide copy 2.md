@@ -1,6 +1,6 @@
 ---
 layout: '../../layouts/BlogPost.astro'
-tags: 'toto'
+tags: ['running', 'e']
 title: 'Markdown Style Guide'
 intro: 'toto'
 author: 'fantomtracks'

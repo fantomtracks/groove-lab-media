@@ -1,0 +1,44 @@
+---
+
+const { 
+	isALink = false,
+	cssMod = '',
+	text= '',
+	href = '',
+	alt = '' 
+} = Astro.props;
+
+let attrs = {}
+
+if(isALink) {
+	attrs = {
+		'href': href,
+		'alt': alt,
+	}
+}
+
+---
+
+{isALink ? (
+	<a class={`button ${cssMod}`} { ...attrs }>{text}</a>
+) : (
+	<button class={`button ${cssMod}`}>{text}</button>
+)}
+
+<style>
+	.button {
+		--bg-color: var(--color--light-blue);
+
+		display: inline-block;
+		padding: var(--space-2xs) var(--space-xs);
+		border-radius: 500px;
+		background: var(--bg-color);
+		color: var(--color--white);
+		text-decoration: none;
+		transition: background-color .5s;
+	}
+
+	.button:hover {
+		--bg-color: red;
+	}
+</style>

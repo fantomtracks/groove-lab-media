@@ -1,7 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import TagsCloud from '../components/TagsCloud.astro';
+import AllTags from '../components/AllTags.astro';
+
+// Fetch all posts and extract tags
+const allPosts = await getCollection('blog');
+const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all tags into a single array
 ---
+
 <Layout>
-	<TagsCloud showCount={true} />
+	<AllTags tags={allTags} />
 </Layout>

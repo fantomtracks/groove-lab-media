@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import AllTags from '../../components/AllTags.astro';
 import BlogList from '../../components/BlogList.astro';
 
 const { tag } = Astro.props;
@@ -8,22 +9,28 @@ const { tag } = Astro.props;
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
 	
-	// Extract unique categories from the posts
-	const categories = [...new Set(posts.map((post) => post.data.tag))];
+	// Extract unique tags from all posts
+	const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
 
-	// Generate paths for each tag
-	return categories.map((tag) => ({
+	// Generate paths for each unique tag
+	return tags.map((tag) => ({
 		params: { slug: tag }, // Use the tag as the slug
 		props: { tag },        // Pass the tag as a prop
 	}));
 }
 
+// Fetch all posts
+const allPosts = await getCollection('blog');
+
 // Filter posts by the current tag
-const posts = (await getCollection('blog')).filter((post) => post.data.tag === tag);
+const posts = (await getCollection('blog')).filter((post) => 
+	post.data.tags && post.data.tags.includes(tag)
+);
 ---
 <Layout>
-	<h1>Posts by tag {tag}</h1>
+	<h1>Posts tagged with "{tag}"</h1>
 	<section class="blog">
-		<BlogList {posts} />
+		<BlogList posts={posts} />
 	</section>
+	<AllTags tags={allPosts.flatMap((post) => post.data.tags || [])} />
 </Layout>
