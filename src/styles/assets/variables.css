@@ -53,5 +53,8 @@
 	--width--content--medium: 60rem;
 	--width--content--large: 90rem;
 
-	--width--site-gutter: var(--space-m);		
+	--width--site-gutter: var(--space-m);
+
+	--gradient-angle: -90deg;
+	--gradient-stops: #16A085 0%, #8cc751 51%, #16A085 100%;
 }

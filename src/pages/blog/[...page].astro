@@ -19,15 +19,13 @@ export async function getStaticPaths({ paginate }: { paginate: import('astro').P
 }
 ---
 <Layout>
-	<section class="blog">
-		<ul class="bloglist hero">
-			{page.data.map((post) => (
-				<li class="bloglist__item">
-					<Card post={post.props} />
-				</li>
-			))}
-		</ul>
-	</section>
+	<ul class="bloglist hero">
+		{page.data.map((post) => (
+			<li class="bloglist__item">
+				<Card post={post.props} />
+			</li>
+		))}
+	</ul>
 	<Pagination nav={page.url}/>
 </Layout>
 

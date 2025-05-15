@@ -22,3 +22,9 @@
 		margin-block-start: var(--space-2xl);
 	}
 }
+
+.wrapper {
+	padding-inline: var(--space-s);
+	max-inline-size: 900px;
+	margin-inline: auto;
+}

@@ -28,9 +28,7 @@ const posts = (await getCollection('blog')).filter((post) =>
 );
 ---
 <Layout>
-	<h1>Posts tagged with "{tag}"</h1>
-	<section class="blog">
-		<BlogList posts={posts} />
-	</section>
+	<h1 class="title wrapper">Posts tagged with "{tag}"</h1>
+	<BlogList posts={posts} />
 	<AllTags tags={allPosts.flatMap((post) => post.data.tags || [])} />
 </Layout>

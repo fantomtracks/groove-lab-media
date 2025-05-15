@@ -12,7 +12,7 @@ const { author, pubDate, updatedDate } = Astro.props;
 ---
 
 <div class="article-metas">
-	By <a class="article-metas__author" href={`/author/${author}/`}>{author}</a> on
+	By <a class="article-metas__author text-gradient" href={`/author/${author}/`}>{author}</a> on
 	<time class="article-metas__date" datetime="2024-01-12">
 		<FormattedDate date={pubDate} />
 	</time>

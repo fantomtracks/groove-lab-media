@@ -3,9 +3,12 @@ const today = new Date();
 ---
 
 <footer class="grid__footer site-footer">
-	&copy; {today.getFullYear()} Groove Lab Media. All rights reserved.
+	<p>
+		&copy; {today.getFullYear()} Groove Lab Media.
+	</p>
 	<nav>
-		<a href="/rss.xml">Subscribe to RSS [logo]</a>
+		<a target="_blank" href="https://www.instagram.com/groovelabmedia/">Instagram</a>
+		<a target="_blank" href="/rss.xml">Subscribe to RSS</a>
 	</nav>
 </footer>
 <style>
@@ -18,5 +21,28 @@ const today = new Date();
 
 	.site-footer p {
 		font-size: var(--step--1);
+		font-family: var(--font-family--sans-serif);
+	}
+
+	nav a {
+		font-size: var(--step--2);
+		position: relative;
+		display: inline-block;
+		color: var(--color-text);
+		text-decoration: none;
+		padding-right: var(--space-3xs);
+		&::after {
+			content: '|';
+			position: absolute;
+			right: -1px;
+			top: 0;
+			color: var(--color--dark-gray);
+		}
+	}
+
+	nav a:last-child{
+		&::after {
+			content: '';
+		}
 	}
 </style>

@@ -22,8 +22,6 @@ export async function getStaticPaths() {
 const posts = (await getCollection('blog')).filter((post) => post.data.author === author);
 ---
 <Layout>
-	<h1>Posts by {author}</h1>
-	<section class="blog">
-		<BlogList {posts} />
-	</section>
+	<h1 class="title wrapper">Posts by {author} :</h1>
+	<BlogList {posts} />
 </Layout>

@@ -28,21 +28,31 @@ if(isALink) {
 )}
 
 <style>
+	@property --gradient-button-fill {
+		syntax: '<color>';
+		inherits: true;
+		initial-value: white;
+	}
 	.button {
 		--bg-color: var(--color--light-blue);
+		--textColor: var(--color--text);
 
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
 		padding: var(--space-2xs) var(--space-xs);
-		border-radius: 500px;
-		background: var(--bg-color);
-		color: var(--color--white);
+		border: 2px solid transparent;
+		border-radius: 4px;
+		background: 
+			linear-gradient(var(--gradient-button-fill) 0 0) padding-box,
+			linear-gradient(var(--gradient-angle), var(--gradient-stops)) border-box;
 		text-decoration: none;
-		transition: background-color .5s;
+		transition: --gradient-button-fill .5s , color, .5s;
+		color: var(--textColor);
 	}
 
 	.button:hover {
-		--bg-color: red;
+		--gradient-button-fill: transparent;
+		--textColor: white;
 	}
-</style>
+</style>         
