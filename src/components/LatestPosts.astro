@@ -1,18 +1,21 @@
 ---
-import TagsCloud from '../components/TagsCloud.astro';
-
-const { tags } = Astro.props;
+import BlogList from './BlogList.astro';
+const { posts, cssMod = '' } = Astro.props;
+const htmlClasses = `bloglist ${cssMod}`; 
 ---
-<div class="allTags">
-	<div class="allTags-title">All tags :</div>
-	<TagsCloud tags={tags} showCount={true} />
+<div class="latestPosts">
+	<div class="latestPosts__title">
+		Latest posts :
+	</div>
+	<BlogList posts={posts} max>
 </div>
+
 <style>
-	.allTags {
+	.latestPosts {
 		margin-block: var(--space-xl);
 	}
 
-	.allTags-title {
+	.latestPosts__title {
 		margin: 0;
 		margin-block-end: var(--space-xs);
 		color: var(--color--text);

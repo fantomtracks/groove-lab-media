@@ -6,6 +6,7 @@ import Layout from '../layouts/Layout.astro';
 import ArticleMetas from '../components/ArticleMetas.astro';
 import AllTags from '../components/AllTags.astro';
 import TagsCloud from '../components/TagsCloud.astro';
+import LatestPosts from '../components/LatestPosts.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -21,6 +22,7 @@ const {
 
 // Fetch all posts to extract tags
 const allPosts = await getCollection('blog');
+const latestPosts = allPosts.slice(0, 6);
 const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all tags into a single array
 ---
 
@@ -58,6 +60,7 @@ const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all
 		<slot />
 	</article>
 	<aside class="blogpost__aside content-flow entry-content">
+		<LatestPosts posts={latestPosts} />
 		<AllTags tags={allTags} />
 	</aside>
 </Layout>
