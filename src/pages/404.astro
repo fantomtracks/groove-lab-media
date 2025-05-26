@@ -1,12 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
 ---
 
 <Layout title="Page not found">
-	// TODO : styles
-    <h1>Welp, this is awkward!</h1>
-    <p>We seem to have misplaced something</p>
+  <div class="wrapper content-flow">
+    <h1 class="title">Welp, this is awkward!</h1>
+    <p>We seem to have misplaced something.</p>
     <p>
-        <a href="/">Go home</a>
+      <Button isALink="true" href="/" text="Go home" />
     </p>
+    <p>
+      <img
+        src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHI2MHl3aHg3YjRocG96bXN5OG4xOHhram83cDNib2tsMm1teXlhaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3iCmFpFfm6DXa/giphy.gif"
+        alt=""
+      />
+    </p>
+  </div>
 </Layout>
