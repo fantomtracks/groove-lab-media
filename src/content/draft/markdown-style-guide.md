@@ -5,7 +5,7 @@ title: "Markdown Style Guide"
 description: "test"
 intro: "toto"
 author: "fantomtracks"
-pubDate: "2022-02-22"
+pubDate: "2027-02-22"
 heroImage: { src: "/blog-placeholder-1.jpg", caption: "blabhblah", alt: "alt" }
 ---
 

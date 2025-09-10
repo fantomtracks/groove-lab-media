@@ -8,6 +8,9 @@ const { page } = Astro.props;
 
 export async function getStaticPaths({ paginate }: { paginate: import('astro').PaginateFunction }) {
 	const posts = await getCollection('blog');
+	
+	posts.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
+	
 	const formatedPosts = posts.map((post) => ({
 		params: { slug: post.id },
 		props: post,

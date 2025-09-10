@@ -60,16 +60,8 @@ const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all
 		
 		<slot />
 	</article>
-	<aside class="blogpost__aside content-flow entry-content">
+	<aside class="wrapper">
 		<LatestPosts posts={latestPosts} />
 		<AllTags tags={allTags} />
 	</aside>
 </Layout>
-
-<style>
-	.blogpost__aside {
-		margin-block-start: var(--space-xl);
-		border-block-start: 1px solid var(--color--light-gray);
-		padding-block: var(--space-xl);
-	}
-</style>
