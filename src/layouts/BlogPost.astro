@@ -23,6 +23,7 @@ const {
 
 // Fetch all posts to extract tags
 const allPosts = await getCollection('blog');
+const currentPost = allPosts.find(post => post.data.title === title);
 const latestPosts = allPosts.slice(0, 6);
 const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all tags into a single array
 ---
@@ -61,7 +62,7 @@ const allTags = allPosts.flatMap((post) => post.data.tags || []); // Flatten all
 		<slot />
 	</article>
 	<aside class="wrapper">
-		<LatestPosts posts={latestPosts} />
+		<LatestPosts posts={latestPosts} currentPost={currentPost} />
 		<AllTags tags={allTags} />
 	</aside>
 </Layout>
