@@ -1,3 +1,7 @@
+.content-flow {
+  hyphens: manual;
+}
+
 .content-flow > * + * {
 	margin-block-start: var(--flow-space);
 }
@@ -15,8 +19,3 @@
 .content-flow > .has-large-flow-space + * {
 	margin-block-start: var(--flow-space--large);
 }
-
-/* Debug */
-/* .content-flow {
-	background: violet;
-} */

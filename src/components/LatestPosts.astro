@@ -1,13 +1,17 @@
 ---
 import BlogList from './BlogList.astro';
-const { posts, cssMod = '' } = Astro.props;
-const htmlClasses = `bloglist ${cssMod}`; 
+const { posts, currentPost } = Astro.props;
+
+// Sort posts by date descending and remove the matching currentPost
+const sortedPosts = [...posts]
+	.filter(p => !(currentPost && p.id === currentPost.id))
+	.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
 ---
 <div class="latestPosts">
 	<div class="title wrapper">
 		Latest posts :
 	</div>
-	<BlogList posts={posts} max>
+	<BlogList posts={sortedPosts} max>
 </div>
 
 <style>
