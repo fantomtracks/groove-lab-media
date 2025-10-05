@@ -1,0 +1,48 @@
+---
+const { items = [], title = '', uniqueID = '', classes = '' } = Astro.props;
+const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
+---
+
+<section id={sliderId} class={`slider ${classes}`}> 
+  {title && <h2 class="slider__title">{title}</h2>}
+  <div class="slider__controls">
+    <button type="button" class="slider__btn slider__btn--prev" aria-label="Précédent" onclick={`document.getElementById('${sliderId}-list').scrollBy({left: -document.getElementById('${sliderId}-list').clientWidth, behavior: 'smooth'})`}>&lt;</button>
+    <button type="button" class="slider__btn slider__btn--next" aria-label="Suivant" onclick={`document.getElementById('${sliderId}-list').scrollBy({left: document.getElementById('${sliderId}-list').clientWidth, behavior: 'smooth'})`}>&gt;</button>
+  </div>
+  <ul id={`${sliderId}-list`} class="slider__list" style="display: flex; overflow-x: auto; scroll-behavior: smooth; padding: 0; margin: 0; list-style: none;">
+    {items.map((item) => (
+      <li class="slider__item" style="min-width: 300px; flex: 0 0 auto; margin-right: 1rem;" set:html={item} />
+    ))}
+  </ul>
+</section>
+
+<style>
+  .slider__controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .slider__btn {
+    background: #eee;
+    border: none;
+    padding: 0.5em 1em;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .slider__btn:hover {
+    background: #ccc;
+  }
+  .slider__list {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #eee;
+  }
+  .slider__item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 1rem;
+  }
+</style>

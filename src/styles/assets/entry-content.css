@@ -17,7 +17,7 @@
 	max-inline-size: none
 }
 
-/* Debug */
-/* .entry-content > * {
-	background: silver;
-} */
+.entry-content iframe {
+  display: block;
+  margin: var(--flow-space--medium) auto;
+}
