@@ -1,5 +1,11 @@
 ---
-const { items = [], title = '', uniqueID = '', classes = '' } = Astro.props;
+const { 
+    items = [],
+    title = '',
+    uniqueID = '',
+    classes = '' 
+} = Astro.props;
+
 const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
 ---
 
