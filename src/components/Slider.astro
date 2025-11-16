@@ -11,21 +11,46 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
 
 <section id={sliderId} class={`slider ${classes}`}> 
   {title && <h2 class="slider__title">{title}</h2>}
-  <div class="slider__controls">
-    <button type="button" class="slider__btn slider__btn--prev" aria-label="Précédent" onclick={`document.getElementById('${sliderId}-list').scrollBy({left: -document.getElementById('${sliderId}-list').clientWidth, behavior: 'smooth'})`}>&lt;</button>
-    <button type="button" class="slider__btn slider__btn--next" aria-label="Suivant" onclick={`document.getElementById('${sliderId}-list').scrollBy({left: document.getElementById('${sliderId}-list').clientWidth, behavior: 'smooth'})`}>&gt;</button>
-  </div>
-  <ul id={`${sliderId}-list`} class="slider__list" style="display: flex; overflow-x: auto; scroll-behavior: smooth; padding: 0; margin: 0; list-style: none;">
+ 
+  <ul id={`${sliderId}-list`} class="slider__list">
     {items.map((item) => (
-      <li class="slider__item" style="min-width: 300px; flex: 0 0 auto; margin-right: 1rem;" set:html={item} />
+  <li class="slider__item" set:html={item} />
     ))}
   </ul>
+   <div class="slider__controls">
+    <button type="button" class="slider__btn slider__btn--prev" aria-label="Précédent" onclick={`
+      const list = document.getElementById('${sliderId}-list');
+      list.scrollBy({left: -list.clientWidth, behavior: 'smooth'});
+    `}>&lt;</button>
+    <button type="button" class="slider__btn slider__btn--next" aria-label="Suivant" onclick={`
+      const list = document.getElementById('${sliderId}-list');
+      list.scrollBy({left: list.clientWidth, behavior: 'smooth'});
+    `}>&gt;</button>
+  </div>
+
+  <div class="slider__dots" id={`${sliderId}-dots`}>
+    {Array.from({ length: items.length || 0 }, (_, i) => (
+      <button
+        type="button"
+        class="slider__dot"
+        aria-label={`Aller à l'item ${i + 1}`}
+        onclick={`
+          const list = document.getElementById('${sliderId}-list');
+          const item = list.children[${i}];
+          if(item) {
+            const left = item.offsetLeft - list.offsetLeft;
+            list.scrollTo({ left, behavior: 'smooth' });
+          }
+        `}
+      />
+    ))}
+  </div>
 </section>
 
 <style>
   .slider__controls {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     gap: 1rem;
     margin-bottom: 1rem;
   }
@@ -42,13 +67,51 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
     background: #ccc;
   }
   .slider__list {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 0;
+    margin: 0;
+    list-style: none;
     scrollbar-width: thin;
     scrollbar-color: #888 #eee;
   }
-  .slider__item {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    padding: 1rem;
+
+    /* Hide horizontal scrollbar for Chrome, Safari, Opera */
+    .slider__list::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide horizontal scrollbar for Firefox */
+    .slider__list {
+        scrollbar-width: none;
+    }
+    .slider__item {
+        min-width: 250px;
+        flex: 0 0 auto;
+        margin-right: 1rem;
+        margin-block-start: 0;
+    }
+</style>
+<style>
+  .slider__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .slider__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    padding: 0;
+  }
+  .slider__dot:hover {
+    background: #888;
   }
 </style>
