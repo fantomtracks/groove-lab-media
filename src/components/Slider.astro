@@ -9,7 +9,7 @@ const {
 const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
 ---
 
-<section id={sliderId} class={`slider ${classes}`}> 
+<section id={sliderId} class={`slider ${classes}`} data-slider-id={sliderId}> 
   {title && <h2 class="slider__title">{title}</h2>}
  
   <ul id={`${sliderId}-list`} class="slider__list">
@@ -20,11 +20,15 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
    <div class="slider__controls">
     <button type="button" class="slider__btn slider__btn--prev" aria-label="Précédent" onclick={`
       const list = document.getElementById('${sliderId}-list');
-      list.scrollBy({left: -list.clientWidth, behavior: 'smooth'});
+      const item = list.querySelector('.slider__item');
+      const itemWidth = item ? item.offsetWidth + parseInt(getComputedStyle(item).marginRight) : 316;
+      list.scrollBy({left: -itemWidth, behavior: 'smooth'});
     `}>&lt;</button>
     <button type="button" class="slider__btn slider__btn--next" aria-label="Suivant" onclick={`
       const list = document.getElementById('${sliderId}-list');
-      list.scrollBy({left: list.clientWidth, behavior: 'smooth'});
+      const item = list.querySelector('.slider__item');
+      const itemWidth = item ? item.offsetWidth + parseInt(getComputedStyle(item).marginRight) : 316;
+      list.scrollBy({left: itemWidth, behavior: 'smooth'});
     `}>&gt;</button>
   </div>
 
@@ -38,7 +42,10 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
           const list = document.getElementById('${sliderId}-list');
           const item = list.children[${i}];
           if(item) {
-            const left = item.offsetLeft - list.offsetLeft;
+            let left = item.offsetLeft - list.offsetLeft;
+            if (${i} === list.children.length - 1) {
+              left = list.scrollWidth - list.clientWidth;
+            }
             list.scrollTo({ left, behavior: 'smooth' });
           }
         `}
@@ -93,7 +100,50 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
         margin-right: 1rem;
         margin-block-start: 0;
     }
+  .slider__dot.active {
+    background: #222;
+  }
+  .slider__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.slider[data-slider-id]').forEach(section => {
+    const sliderId = section.getAttribute('data-slider-id');
+    const list = document.getElementById(sliderId + '-list');
+    const dots = document.getElementById(sliderId + '-dots')?.querySelectorAll('.slider__dot');
+    const prevBtn = section.querySelector('.slider__btn--prev');
+    const nextBtn = section.querySelector('.slider__btn--next');
+    if (!list || !dots || !prevBtn || !nextBtn) return;
+
+    function updateNav() {
+      const items = Array.from(list.children);
+      let current = 0;
+      let minDist = Infinity;
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (!item) continue;
+        const dist = Math.abs(list.scrollLeft - (item.offsetLeft - list.offsetLeft));
+        if (dist < minDist) {
+          minDist = dist;
+          current = i;
+        }
+      }
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+      });
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === items.length - 1;
+    }
+
+    list.addEventListener('scroll', updateNav);
+    updateNav();
+  });
+});
+</script>
 <style>
   .slider__dots {
     display: flex;
