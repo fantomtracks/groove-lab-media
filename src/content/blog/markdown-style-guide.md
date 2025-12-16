@@ -1,13 +1,21 @@
 ---
 layout: "../../layouts/BlogPost.astro"
-tags: ["running", "totededeo"]
-title: "Markdown Style Guide"
-description: "test"
-intro: "toto"
-author: "fantomtracks"
-pubDate: "2027-02-22"
-heroImage: { src: "/blog-placeholder-1.jpg", caption: "blabhblah", alt: "alt" }
+tags: ['news']
+title: 'Markdown Style Guide'
+description: 'test'
+intro: "Whether you're a beginner or a seasoned marathoner, the world of running offers endless opportunities for growth, self-discovery, and improvement."
+author: 'fantomtracks'
+pubDate: '2025-06-10'
+onlyDev: true
+heroImage: {
+    src: '/running.webp',
+    caption: 'A runner, as the main focus, demonstrating proper running form with a knee drive on a scenic path in Prospect Park, Brooklyn. Shot close-up on a Canon EOS R5 with a 70-200mm f/2.8 lens at 200mm, ensuring the runner remains centered and prominent --ar 16:9',
+    alt: 'alt'
+}
 ---
+import Figure from '../../components/Figure.astro';
+import myImage from '../../../public/running.webp';
+
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
 

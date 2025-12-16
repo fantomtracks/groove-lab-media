@@ -7,7 +7,8 @@ import BlogList from '../../components/BlogList.astro';
 const { tag } = Astro.props;
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const isDev = import.meta.env.DEV;
+	const posts = (await getCollection('blog')).filter((p) => isDev || !p.data.onlyDev);
 	
 	// Extract unique tags from all posts
 	const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
@@ -19,11 +20,12 @@ export async function getStaticPaths() {
 	}));
 }
 
-// Fetch all posts
-const allPosts = await getCollection('blog');
+// Fetch all posts (filtered in prod)
+const isDev = import.meta.env.DEV;
+const allPosts = (await getCollection('blog')).filter((p) => isDev || !p.data.onlyDev);
 
 // Filter posts by the current tag
-const posts = (await getCollection('blog')).filter((post) => 
+const posts = allPosts.filter((post) => 
 	post.data.tags && post.data.tags.includes(tag)
 );
 ---

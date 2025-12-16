@@ -1,9 +1,9 @@
 ---
 const { 
-    items = [],
-    title = '',
-    uniqueID = '',
-    classes = '' 
+  items = [],
+  title = '',
+  uniqueID = '',
+  classes = '' 
 } = Astro.props;
 
 const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
@@ -14,60 +14,135 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
  
   <ul id={`${sliderId}-list`} class="slider__list">
     {items.map((item) => (
-  <li class="slider__item" set:html={item} />
+      <li class="slider__item" set:html={item} />
     ))}
   </ul>
-   <div class="slider__controls">
-    <button type="button" class="slider__btn slider__btn--prev" aria-label="Précédent" onclick={`
-      const list = document.getElementById('${sliderId}-list');
-      const item = list.querySelector('.slider__item');
-      const itemWidth = item ? item.offsetWidth + parseInt(getComputedStyle(item).marginRight) : 316;
-      list.scrollBy({left: -itemWidth, behavior: 'smooth'});
-    `}>&lt;</button>
-    <button type="button" class="slider__btn slider__btn--next" aria-label="Suivant" onclick={`
-      const list = document.getElementById('${sliderId}-list');
-      const item = list.querySelector('.slider__item');
-      const itemWidth = item ? item.offsetWidth + parseInt(getComputedStyle(item).marginRight) : 316;
-      list.scrollBy({left: itemWidth, behavior: 'smooth'});
-    `}>&gt;</button>
-  </div>
-
-  <div class="slider__dots" id={`${sliderId}-dots`}>
-    {Array.from({ length: items.length || 0 }, (_, i) => (
-      <button
-        type="button"
-        class="slider__dot"
-        aria-label={`Aller à l'item ${i + 1}`}
-        onclick={`
-          const list = document.getElementById('${sliderId}-list');
-          const item = list.children[${i}];
-          if(item) {
-            let left = item.offsetLeft - list.offsetLeft;
-            if (${i} === list.children.length - 1) {
-              left = list.scrollWidth - list.clientWidth;
-            }
-            list.scrollTo({ left, behavior: 'smooth' });
-          }
-        `}
-      />
-    ))}
+  <div class="slider__controls">
+    <button type="button" class="slider__btn slider__btn--prev" aria-label="Précédent" id={`${sliderId}-prev`}>&lt;</button>
+    <div class="slider__dots" id={`${sliderId}-dots`}>
+      {Array.from({ length: items.length || 0 }, (_, i) => (
+        <button
+          type="button"
+          class="slider__dot"
+          aria-label={`Aller à l'item ${i + 1}`}
+          data-index={i}
+        />
+      ))}
+    </div>
+    <button type="button" class="slider__btn slider__btn--next" aria-label="Suivant" id={`${sliderId}-next`}>&gt;</button>
   </div>
 </section>
 
+
+<script is:client>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.slider[data-slider-id]').forEach(section => {
+    const sliderId = section.getAttribute('data-slider-id');
+    const list = document.getElementById(sliderId + '-list');
+    const dots = Array.from(section.querySelectorAll('.slider__dot'));
+    const prevBtn = document.getElementById(sliderId + '-prev');
+    const nextBtn = document.getElementById(sliderId + '-next');
+    if (!list || !(prevBtn instanceof HTMLButtonElement) || !(nextBtn instanceof HTMLButtonElement)) return;
+
+    function scrollByItem(dir = 1) {
+      const item = list.querySelector('.slider__item');
+      const itemWidth = item ? item.offsetWidth + parseInt(getComputedStyle(item).marginRight) : 316;
+      list.scrollBy({ left: dir * itemWidth, behavior: 'smooth' });
+    }
+
+    function scrollToItem(i) {
+      const item = list.children[i];
+      if (item) {
+        let left = item.offsetLeft - list.offsetLeft;
+        if (i === list.children.length - 1) {
+          left = list.scrollWidth - list.clientWidth;
+        }
+        list.scrollTo({ left, behavior: 'smooth' });
+      }
+    }
+
+    prevBtn.addEventListener('click', () => scrollByItem(-1));
+    nextBtn.addEventListener('click', () => scrollByItem(1));
+    if (Array.isArray(dots)) {
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => scrollToItem(i));
+      });
+    }
+
+    function updateNav() {
+      const items = Array.from(list.children);
+      let current = 0;
+      let minDist = Infinity;
+      
+      // Check si on est au bout du scroll
+      const isAtEnd = list.scrollLeft + list.clientWidth >= list.scrollWidth - 5;
+      
+      if (isAtEnd) {
+        current = items.length - 1;
+      } else {
+        // Trouve l'item dont le début est le plus proche du bord gauche visible
+        // ou qui est le plus visible dans le viewport
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          if (!item || typeof item.offsetLeft !== 'number') continue;
+          
+          const itemLeft = item.offsetLeft - list.offsetLeft;
+          const itemRight = itemLeft + item.offsetWidth;
+          const scrollLeft = list.scrollLeft;
+          const scrollRight = scrollLeft + list.clientWidth;
+          
+          // Calcule combien de l'item est visible
+          const visibleLeft = Math.max(itemLeft, scrollLeft);
+          const visibleRight = Math.min(itemRight, scrollRight);
+          const visibleWidth = Math.max(0, visibleRight - visibleLeft);
+          
+          // Si l'item est visible à plus de 50%, c'est probablement l'actif
+          if (visibleWidth > item.offsetWidth * 0.5) {
+            current = i;
+            break;
+          }
+          
+          // Sinon, garde celui qui est le plus proche
+          const dist = Math.abs(scrollLeft - itemLeft);
+          if (dist < minDist) {
+            minDist = dist;
+            current = i;
+          }
+        }
+      }
+      
+      if (Array.isArray(dots)) {
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === current);
+        });
+      }
+      if (prevBtn instanceof HTMLButtonElement)
+        prevBtn.disabled = current === 0;
+      if (nextBtn instanceof HTMLButtonElement)
+        nextBtn.disabled = current === items.length - 1;
+    }
+
+    list.addEventListener('scroll', updateNav);
+    updateNav();
+  });
+});
+</script>
+
 <style>
-  .slider__controls {
+    .slider__controls {
     display: flex;
-    justify-content: left;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
   }
   .slider__btn {
     background: #eee;
     border: none;
-    padding: 0.5em 1em;
-    font-size: 1.5em;
+    padding: 0.35em 0.6em;
+    font-size: 1.2em;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 50%;
     transition: background 0.2s;
   }
   .slider__btn:hover {
@@ -85,21 +160,20 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
     scrollbar-width: thin;
     scrollbar-color: #888 #eee;
   }
-
-    /* Hide horizontal scrollbar for Chrome, Safari, Opera */
-    .slider__list::-webkit-scrollbar {
-        display: none;
-    }
-    /* Hide horizontal scrollbar for Firefox */
-    .slider__list {
-        scrollbar-width: none;
-    }
-    .slider__item {
-        min-width: 250px;
-        flex: 0 0 auto;
-        margin-right: 1rem;
-        margin-block-start: 0;
-    }
+  /* Hide horizontal scrollbar for Chrome, Safari, Opera */
+  .slider__list::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide horizontal scrollbar for Firefox */
+  .slider__list {
+    scrollbar-width: none;
+  }
+  .slider__item {
+    min-width: 250px;
+    flex: 0 0 auto;
+    margin-right: 1rem;
+    margin-block-start: 0;
+  }
   .slider__dot.active {
     background: #222;
   }
@@ -107,49 +181,10 @@ const sliderId = uniqueID || 'slider-' + Math.random().toString(36).slice(2);
     opacity: 0.5;
     cursor: not-allowed;
   }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.slider[data-slider-id]').forEach(section => {
-    const sliderId = section.getAttribute('data-slider-id');
-    const list = document.getElementById(sliderId + '-list');
-    const dots = document.getElementById(sliderId + '-dots')?.querySelectorAll('.slider__dot');
-    const prevBtn = section.querySelector('.slider__btn--prev');
-    const nextBtn = section.querySelector('.slider__btn--next');
-    if (!list || !dots || !prevBtn || !nextBtn) return;
-
-    function updateNav() {
-      const items = Array.from(list.children);
-      let current = 0;
-      let minDist = Infinity;
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        if (!item) continue;
-        const dist = Math.abs(list.scrollLeft - (item.offsetLeft - list.offsetLeft));
-        if (dist < minDist) {
-          minDist = dist;
-          current = i;
-        }
-      }
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === current);
-      });
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current === items.length - 1;
-    }
-
-    list.addEventListener('scroll', updateNav);
-    updateNav();
-  });
-});
-</script>
-<style>
   .slider__dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 1rem;
   }
   .slider__dot {
     width: 12px;

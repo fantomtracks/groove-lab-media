@@ -2,9 +2,15 @@
 import Card from '../components/Card.astro';
 const { posts, cssMod = '' } = Astro.props;
 const htmlClasses = `bloglist ${cssMod}`; 
+
+// In prod, hide posts flagged as dev-only
+const visiblePosts = (posts || []).filter((p) => {
+	const devOnly = Boolean(p?.data?.onlyDev);
+	return import.meta.env.DEV || !devOnly;
+});
 ---
 <ul class={htmlClasses}>
-	{posts.map((post) => (
+	{visiblePosts.map((post) => (
 		<li class="bloglist__item">
 			<Card {post} />
 		</li>
